@@ -9,7 +9,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceTransactionManagerAutoConfiguration;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.context.annotation.Bean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.web.client.RestTemplate;
 
 //不是用springboot自带的数据源和mybatis配置
 @SpringBootApplication(exclude={DataSourceAutoConfiguration.class, MybatisAutoConfiguration.class
@@ -22,6 +24,11 @@ public class TestApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(TestApplication.class, args);
+    }
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }
