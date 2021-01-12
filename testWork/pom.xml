@@ -188,5 +188,19 @@
         </repository>
     </repositories>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <attachClasses>true</attachClasses>
+                    <classesClassifier>api</classesClassifier>
+                    <warName>testWork</warName>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
 
 </project>

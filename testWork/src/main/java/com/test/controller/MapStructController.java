@@ -1,19 +1,17 @@
 package com.test.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.test.mapper.CarPoConvertVo;
 import com.test.model.CarPo;
 import com.test.model.CarVo;
 import io.swagger.annotations.Api;
+import lombok.extern.java.Log;
 import org.mapstruct.factory.Mappers;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import springfox.documentation.spring.web.json.Json;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +20,7 @@ import java.util.List;
 @RestController
 @Api(description = "测试 MapStruct")
 @RequestMapping("/mapStruct")
+@Log
 public class MapStructController {
 
     @Autowired
@@ -40,6 +39,7 @@ public class MapStructController {
         CarPo carPo = CarPo.builder().branch("马自达").id(1).name("DB707").build();
         CarPo carPo2 = CarPo.builder().branch("斯柯达").id(2).name("DB708").build();
         CarPo carPo3 = CarPo.builder().branch("马达啦").id(3).name("DB709").build();
+        log.info("车子的参数是："+carPo.toString());
         carPos.add(carPo);
         carPos.add(carPo2);
         carPos.add(carPo3);
