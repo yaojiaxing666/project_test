@@ -5,6 +5,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,11 @@ public class TestRedisController {
         redisTemplate.opsForValue().set(name,peopleInfo,60, TimeUnit.SECONDS);
         PeopleInfo p = (PeopleInfo) redisTemplate.opsForValue().get(name);
         return p;
+    }
+
+    @Async
+    public void redisAsync(){
+        System.out.println(Thread.currentThread().getName()+" :redis");
     }
 
 }
