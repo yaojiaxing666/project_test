@@ -32,8 +32,10 @@ public class LoginController {
     @GetMapping("/getUser")
     public Object getUser(HttpServletRequest request){
         HttpSession session = request.getSession();
-        UserInfo userInfo = (UserInfo) session.getAttribute("userInfo");
-        log.info("getUser:==="+userInfo.toString());
+        String id = session.getId();
+        String userInfo = (String) session.getAttribute("userInfo");
+        log.info("getUser:==="+userInfo);
+        log.info("sessionId:==="+id);
         return userInfo;
     }
 }
