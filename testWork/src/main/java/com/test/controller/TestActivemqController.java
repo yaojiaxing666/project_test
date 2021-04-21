@@ -1,20 +1,12 @@
 package com.test.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.test.model.CallDetailRes;
-import com.test.model.DepartHandlerRes;
-import com.test.model.PageBean;
-import com.test.model.ReplayDetailRes;
 import com.test.producer.ActivemqProducer;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Api(description = "Activemq测试接口")
 @RestController
