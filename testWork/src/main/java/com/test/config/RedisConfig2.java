@@ -80,10 +80,12 @@ public class RedisConfig2 {
 
         Set<String> cacheNames = new HashSet<>();
         cacheNames.add(userCacheName);
+        cacheNames.add("testCache");
 
         // 对每个缓存空间应用不同的配置
         Map<String, RedisCacheConfiguration> configMap = new HashMap<>();
         configMap.put(userCacheName, defaultCacheConfig.entryTtl(Duration.ofSeconds(userCacheExpireTime)));
+        configMap.put("testCache", defaultCacheConfig.entryTtl(Duration.ofSeconds(666)));
 
         return RedisCacheManager.builder(redisConnectionFactory)
                 .cacheDefaults(defaultCacheConfig)

@@ -2,6 +2,7 @@ package com.test.controller;
 
 import com.test.model.UserInfo;
 import lombok.extern.java.Log;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +15,9 @@ public class CacheController {
 
     /*
     * cacheNames: 支持同一个方法关联多个缓存。这种情况下，当执行方法之前，这些关联的每一个缓存都会被检查，
-    * 而且只要至少其中一个缓存命中了，那么这个缓存中的值就会被返回。
+    * 而且只要至少其中一个缓存命中了，那么这个缓存中的值就会被返回。 cacheNames为多个时，则创建多个缓存。
     *
-    * key: 缓存的时候存的key
+    * key: 缓存的时候存的key, key不填时，是以传入的参数形成的hash值作为key  存储的key最终为  cacheNames::key
     *
     * unless：执行后判断,不缓存的条件。unless 接收一个结果为 true 或 false 的表达式，表达式支持 SpEL。
     * 当结果为 true 时,不缓存。  表达式中的result为返回的对象，对象类型可以用 result.id 获取属性。
@@ -33,6 +34,8 @@ public class CacheController {
     *
     * 过期时间在 redisConfig 中配置 .entryTtl(过期时间)
     *
+    * 在同一个类中的方法使用@Cacheable注解时无效，和@Ansy一样，要在另一个类中才生效。
+    *
     * */
     @GetMapping("/getCache")
     @Cacheable(cacheNames = {"testCache","cache"},key = "#id",unless = "#result=='false'")
@@ -47,11 +50,31 @@ public class CacheController {
     @GetMapping("/testCondition")
     @Cacheable(cacheNames = {"testCache"},key = "#id",condition = "#id=='123'")
     public String testCondition(String id, UserInfo userInfo,boolean flag){
-        log.info("userInfo:"+userInfo.toString());
-        if (flag){
-            return userInfo.toString();
-        }else {
-            return "false";
-        }
+        return userInfo.toString();
     }
+
+    @GetMapping("/testNoKey")
+    @Cacheable(cacheNames = {"testCache"},unless = "#result.age=='20'")
+    public UserInfo testNoKey(String id, UserInfo userInfo, boolean flag){
+        return userInfo;
+    }
+
+    @Autowired
+    private TestController testController;
+
+    /*
+    * 缓存的方法出现异常，无返回值时不缓存
+    * */
+    @GetMapping("/testException")
+    public String testException(String id, UserInfo userInfo) throws Exception {
+        return testController.byZero(id);
+    }
+
+    //这么写是无效的，必须写在另一个类中。
+    @Cacheable(cacheNames = {"testCache"},key = "#id",condition = "#id=='123'")
+    public String byZero(String id) throws Exception{
+        int i=1/0;
+        return id;
+    }
+
 }

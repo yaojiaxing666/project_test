@@ -7,6 +7,7 @@ import com.test.model.People;
 import com.test.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -100,6 +101,12 @@ public class TestController {
         // 当调用的接口返回null时，people 转化后的值也是null
         People people = restTemplate.getForObject("http://127.0.0.1:8888/shtb/personInfo/test", People.class);
         return a;
+    }
+
+    @Cacheable(cacheNames = {"testCache"},key = "#id",condition = "#id=='123'")
+    public String byZero(String id) throws Exception{
+        int i=1/0;
+        return id;
     }
 
 }
