@@ -41,7 +41,10 @@ public class TestController {
             return result;
     }
 
-    @GetMapping("/test-dev")
+    /*
+    *  映射路径也可以通过表达式获取配置文件的值
+    * */
+    @GetMapping("${self.prop}")
     public Object testDev(String param){
         return param+" "+selfProp;
     }
