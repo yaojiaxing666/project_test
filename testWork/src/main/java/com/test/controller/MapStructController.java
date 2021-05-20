@@ -54,6 +54,7 @@ public class MapStructController {
     public static void main(String[] args) {
         CarPo carPo = CarPo.builder().branch("马自达").id(1).name("DB707").build();
         CarVo carVo = new CarVo();
+        //BeanUtils.copyProperties如果类型不同，不会复制，该属性值为null
 //        BeanUtils.copyProperties(carPo,carVo);
 
         CarPoConvertVo mapper = Mappers.getMapper(CarPoConvertVo.class);
