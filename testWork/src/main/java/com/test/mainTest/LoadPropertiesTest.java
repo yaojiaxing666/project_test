@@ -1,5 +1,7 @@
 package com.test.mainTest;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
 import org.springframework.core.io.support.PropertiesLoaderUtils;
 
 import java.io.FileInputStream;
@@ -24,6 +26,8 @@ public class LoadPropertiesTest {
         String age = properties.getProperty("age");
         String id = properties.getProperty("id");
         String sex = properties.getProperty("sex");
+        String policy = properties.getProperty("policy");
+        JSONArray objects = JSON.parseArray(policy);
 
         Map<String,String> map=new HashMap<>((Map) properties);
         String name1 = map.get("name");
