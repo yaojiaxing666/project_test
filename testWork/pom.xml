@@ -173,6 +173,13 @@
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
+        <!-- 配置文件加密  注意与spring的版本对应-->
+        <dependency>
+            <groupId>com.github.ulisesbocchio</groupId>
+            <artifactId>jasypt-spring-boot-starter</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
         <!--加密工具包-->
         <dependency>
             <groupId>commons-codec</groupId>

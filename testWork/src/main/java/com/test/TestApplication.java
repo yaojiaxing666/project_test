@@ -1,6 +1,7 @@
 package com.test;
 
 import com.spring4all.swagger.EnableSwagger2Doc;
+import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties;
 import org.mybatis.spring.annotation.MapperScan;
 import org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration;
 import org.springframework.boot.SpringApplication;
@@ -22,6 +23,8 @@ import org.springframework.web.client.RestTemplate;
 //@EnableOAuth2Sso //开启权限
 @MapperScan("com.test.dao")
 @EnableAsync
+//配置加密注解
+@EnableEncryptableProperties
 public class TestApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
