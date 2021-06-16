@@ -1,17 +1,21 @@
 package com.test.controller;
 
 import com.test.util.SpringUtil;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/thread")
+@Log
 public class ThreadController {
     @Autowired
     private TestRedisController testRedisController;
@@ -45,6 +49,42 @@ public class ThreadController {
             e.printStackTrace();
         }
         System.out.println(Thread.currentThread().getName()+"555 "+s);
+    }
+
+    public static void main(String[] args) {
+
+        ExecutorService executorService = Executors.newFixedThreadPool(3);
+        CountDownLatch countDownLatch = new CountDownLatch(3);
+        log.info("====lail==========");
+        for (int i = 0; i < 3; i++) {
+            int index=i;
+            executorService.execute(new Runnable() {
+                @Override
+                public void run() {
+                    test(index,countDownLatch);
+                }
+            });
+        }
+        try {
+//            countDownLatch.await(15, TimeUnit.SECONDS);
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        executorService.shutdown();
+        log.info("====end==========");
+
+    }
+
+    public static void test(int index,CountDownLatch countDownLatch){
+        log.info("ThreadName=========:"+Thread.currentThread().getName());
+        try {
+            Thread.sleep(5000*index);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        log.info("index=========:"+index);
+        countDownLatch.countDown();
     }
 
 }
